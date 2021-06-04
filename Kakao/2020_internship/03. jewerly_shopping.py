@@ -1,27 +1,27 @@
 def solution(gems) : #{
-    answer = []
+    answer = [0, len(gems)-1]
     len_set_gems = len(set(gems))   ## 보색의 종류의 개수
     len_gems     = len(gems)        ## 총 보석의 길이
     gems_dict = {gems[0]:1}         ## 현재 카트에 담긴 보석의 종류와 각 개수
-    r_idx, l_idx = 0, 0             ## r_idx : 보석 하나씩 추가, l_idx : 보석 하나씩 제거
-    distance, result = 0, 1
+    end, start = 0, 0               ## end : 보석 하나씩 추가, start : 보석 하나씩 제거
 
-    while (r_idx < len_gems and l_idx < len_gems) : #{
+    while (end < len_gems and start < len_gems) : #{
         if len(gems_dict) < len_set_gems : #{  ## dictionary에 모든 값이 아직 들어오지 않은 경우
-            r_idx += 1
-            if r_idx == len_gems : break                                  ## 더 이상 보석을 추가할 수 없으면 멈춤
-            gems_dict[gems[r_idx]] = gems_dict.get(gems[r_idx], 0) + 1    ## 보석의 종류에 해당하는 개수 1 증가
+            end += 1
+            if end == len_gems : break                                ## 더 이상 보석을 추가할 수 없으면 멈춤
+            gems_dict[gems[end]] = gems_dict.get(gems[end], 0) + 1    ## 보석의 종류에 해당하는 개수 1 증가
         #}
         else : #{  ## dictionary에 모든 값이 들어온 경우
-            answer.append([r_idx-l_idx, [l_idx+1, r_idx+1]])              ## 길이, [시작, 끝인덱스] 저장
-            gems_dict[gems[l_idx]] -= 1                                   ## 해당 보석 빼보기
-            if gems_dict[gems[l_idx]] == 0 : del(gems_dict[gems[l_idx]])  ## 해당 보석의 개수가 0개이면 dictionary에서 삭제
-            l_idx += 1
+            if end - start < answer[1] - answer[0] :                  ## 기존 값보다 작으면, [시작, 끝인덱스] 저장
+                answer = [start, end]
+
+            if gems_dict[gems[start]] == 1 : del(gems_dict[gems[start]])  ## 해당 보석의 개수가 1개이면 dictionary에서 삭제
+            else : gems_dict[gems[start]] -= 1                            ## 해당 보석 빼보기
+            start += 1
         #}    
     #}
 
-    cand = sorted(answer, key=lambda x:(x[distance], x[result]))          ## 보석의 길이에 따라, 시작 값에 따라 정렬
-    return cand[0][result]
+    return [answer[0]+1, answer[1]_1]
 #}
 
 gems_list = [["DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA"], 
