@@ -21,7 +21,7 @@ def solution(gems) : #{
         #}    
     #}
 
-    return [answer[0]+1, answer[1]_1]
+    return [answer[0]+1, answer[1]+1]
 #}
 
 gems_list = [["DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA"], 
