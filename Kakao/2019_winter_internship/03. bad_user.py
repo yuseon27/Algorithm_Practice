@@ -20,22 +20,14 @@ def solution(user_id, banned_id): #{
     # possible_id들의 조합
     dup_options = list(product(*possible_id))
 
-    # 하나의 set에서 id가 중복된 경우 제거
+    # 하나의 set에서 id가 중복된 경우 제거, 전체 option에서 중복 제거 - 정렬을 통해
     options = []
     for op in dup_options : #{
-        if len(op) == len(set(op)) : 
-            options.append(op)
+        if len(op) == len(set(op)) and sorted(op) not in options: 
+            options.append(sorted(op))
     #}
 
-    # 전체 option에서 중복 제거 - 정렬을 통해
-    results = []
-    for op in options : #{
-        op = sorted(op)
-        if op not in results :
-            results.append(op)
-    #}
-
-    return len(results)
+    return len(options)
 #}
 
 user_id = [
